@@ -150,10 +150,10 @@ st.markdown("""
 Questo test ti aiuterà a definire la tua modalità di apprendimento. Si fonda sul modello dell'Apprendimento Esperienziale descritto da David Kolb e sul suo Learning Stress Inventory.
 Per ogni gruppo di 4 affermazioni, ordinale in base a quanto ti corrispondono:
 
-* **"Sono proprio io!"** (4 punti)
+* **"Questo sono proprio io!"** (4 punti)
 * **"Qualche volta faccio così"** (3 punti)
-* **"Non faccio quasi mai così"** (2 punti)
-* **"Questo non sono io!"** (1 punto)
+* **"Più raramente faccio così"** (2 punti)
+* **"Questo non sono proprio io!"** (1 punto)
 
 **IMPORTANTE:** In ogni riga devi usare ogni opzione **una sola volta**.
 """)
