@@ -2,7 +2,7 @@ import streamlit as st
 import plotly.graph_objects as go
 
 # --- CONFIGURAZIONE PAGINA ---
-st.set_page_config(page_title="Test Stile di Apprendimento (Kolb)", layout="wide")
+st.set_page_config(page_title="Test Stile di Apprendimento", layout="wide")
 
 # --- CSS PERSONALIZZATO ---
 st.markdown("""
@@ -24,10 +24,10 @@ st.markdown("""
 
 # --- MAPPATURA PUNTEGGI ---
 mappa_punteggi = {
-    "Sono proprio io!": 4,
+    "Questo sono proprio io!": 4,
     "Qualche volta faccio così": 3,
-    "Non faccio quasi mai così": 2,
-    "Questo non sono io!": 1
+    "Più raramente faccio così": 2,
+    "Questo non sono proprio io!": 1
 }
 opzioni_lista = list(mappa_punteggi.keys())
 
@@ -145,9 +145,9 @@ styles_description = {
 }
 
 # --- HEADER E INTRODUZIONE ---
-st.title("Autovalutazione Stile di Apprendimento (Modello di Kolb)")
+st.title("Autovalutazione Stile di Apprendimento")
 st.markdown("""
-Questo test ti aiuterà a definire la tua modalità di apprendimento. 
+Questo test ti aiuterà a definire la tua modalità di apprendimento. Si fonda sul modello dell'Apprendimento Esperienziale descritto da David Kolb e sul suo Learning Stress Inventory.
 Per ogni gruppo di 4 affermazioni, ordinale in base a quanto ti corrispondono:
 
 * **"Sono proprio io!"** (4 punti)
