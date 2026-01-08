@@ -1,10 +1,10 @@
 import streamlit as st
 import plotly.graph_objects as go
 
-# Configurazione della pagina
+# --- CONFIGURAZIONE PAGINA ---
 st.set_page_config(page_title="Test Stile di Apprendimento (Kolb)", layout="wide")
 
-# --- CSS Personalizzato ---
+# --- CSS PERSONALIZZATO ---
 st.markdown("""
 <style>
     .stRadio > label {display: none;}
@@ -22,17 +22,16 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- Mappatura Frasi -> Punteggi ---
+# --- MAPPATURA PUNTEGGI ---
 mappa_punteggi = {
     "Sono proprio io!": 4,
     "Qualche volta faccio così": 3,
     "Non faccio quasi mai così": 2,
     "Questo non sono io!": 1
 }
-
 opzioni_lista = list(mappa_punteggi.keys())
 
-# --- Dati del Test (Le 9 righe x 4 colonne) ---
+# --- DATI DEL TEST ---
 data = [
     {
         "id": 1,
@@ -117,47 +116,51 @@ data = [
     }
 ]
 
-# --- Definizioni Stili ---
+# --- DESCRIZIONI STILI ---
 styles_description = {
     "Convergente": """
-    **Stile Dominante: CONVERGENTE** *Combinazione di Concettualizzazione Astratta (CA) e Sperimentazione Attiva (SA)*.
+    **Stile Dominante: CONVERGENTE**
+    *Combinazione di Concettualizzazione Astratta (CA) e Sperimentazione Attiva (SA)*.
     
-    La tua grande forza risiede nell'applicazione pratica delle idee. Funzioni al meglio in situazioni dove esiste una singola risposta corretta o una soluzione specifica a un problema (come nei test tecnici). Organizzi la conoscenza attraverso il ragionamento ipotetico-deduttivo per focalizzarti su problemi specifici. Tendi ad essere meno emotivo e preferisci avere a che fare con oggetti e problemi tecnici piuttosto che con dinamiche interpersonali. Questo stile è tipico di molti ingegneri e specialisti tecnici.
+    La tua grande forza risiede nell'applicazione pratica delle idee. Funzioni al meglio in situazioni dove esiste una singola risposta corretta o una soluzione specifica a un problema. Organizzi la conoscenza attraverso il ragionamento ipotetico-deduttivo. Tendi ad essere meno emotivo e preferisci avere a che fare con oggetti e problemi tecnici. Stile tipico di ingegneri e specialisti tecnici.
     """,
     "Divergente": """
-    **Stile Dominante: DIVERGENTE** *Combinazione di Esperienza Concreta (EC) e Osservazione Riflessiva (OR/CR)*.
+    **Stile Dominante: DIVERGENTE**
+    *Combinazione di Esperienza Concreta (EC) e Osservazione Riflessiva (OR/CR)*.
     
-    La tua forza risiede nelle capacità immaginative e nell'abilità di osservare le situazioni concrete da diverse prospettive. Sei eccellente nel generare idee (brainstorming). Ti interessi alle persone, tendi ad essere emotivo e ad avere vasti interessi culturali. Questo stile è spesso caratteristico di chi lavora nelle arti, nelle risorse umane o in ambiti umanistici.
+    La tua forza risiede nelle capacità immaginative e nell'abilità di osservare le situazioni concrete da diverse prospettive. Sei eccellente nel generare idee (brainstorming). Ti interessi alle persone, tendi ad essere emotivo e ad avere vasti interessi culturali. Stile tipico delle arti e delle risorse umane.
     """,
     "Integratore": """
-    **Stile Dominante: INTEGRATORE (Assimilatore)** *Combinazione di Concettualizzazione Astratta (CA) e Osservazione Riflessiva (OR/CR)*.
+    **Stile Dominante: INTEGRATORE (Assimilatore)**
+    *Combinazione di Concettualizzazione Astratta (CA) e Osservazione Riflessiva (OR/CR)*.
     
-    La tua forza sta nella creazione di modelli teorici e nel ragionamento induttivo (integrare osservazioni disparate in una spiegazione unica). Sei più interessato ai concetti astratti che alle persone o all'uso pratico immediato delle teorie; per te è fondamentale che una teoria sia logicamente solida e precisa. Questo stile è tipico delle scienze di base, della ricerca e della pianificazione strategica.
+    La tua forza sta nella creazione di modelli teorici e nel ragionamento induttivo. Sei più interessato ai concetti astratti che alle persone o all'uso pratico immediato; per te è fondamentale che una teoria sia logicamente solida. Stile tipico delle scienze di base e della ricerca.
     """,
     "Adattatore": """
-    **Stile Dominante: ADATTATORE (Accomodatore)** *Combinazione di Esperienza Concreta (EC) e Sperimentazione Attiva (SA)*.
+    **Stile Dominante: ADATTATORE (Accomodatore)**
+    *Combinazione di Esperienza Concreta (EC) e Sperimentazione Attiva (SA)*.
     
-    La tua forza sta nel "fare", nel portare avanti piani ed esperimenti e nel lasciarti coinvolgere in nuove esperienze. Ti assumi rischi e ti adatti bene alle circostanze immediate. Se la teoria non coincide con i fatti, tendi a scartare la teoria. Sei a tuo agio con le persone, anche se a volte puoi apparire impaziente. Questo stile è tipico di chi lavora nel business, nel marketing, nelle vendite o in ruoli orientati all'azione.
+    La tua forza sta nel "fare", nel portare avanti piani ed esperimenti. Ti assumi rischi e ti adatti bene alle circostanze immediate. Se la teoria non coincide con i fatti, scarti la teoria. Sei a tuo agio con le persone. Stile tipico del business, marketing e vendite.
     """
 }
 
-# --- Header ---
+# --- HEADER E INTRODUZIONE ---
 st.title("Autovalutazione Stile di Apprendimento (Modello di Kolb)")
 st.markdown("""
 Questo test ti aiuterà a definire la tua modalità di apprendimento. 
-Per ogni riga (gruppo di 4 affermazioni), devi ordinare le frasi in base a quanto ti corrispondono, scegliendo tra le seguenti opzioni:
+Per ogni gruppo di 4 affermazioni, ordinale in base a quanto ti corrispondono:
 
-* **"Sono proprio io!"** (Massima corrispondenza)
-* **"Qualche volta faccio così"**
-* **"Non faccio quasi mai così"**
-* **"Questo non sono io!"** (Minima corrispondenza)
+* **"Sono proprio io!"** (4 punti)
+* **"Qualche volta faccio così"** (3 punti)
+* **"Non faccio quasi mai così"** (2 punti)
+* **"Questo non sono io!"** (1 punto)
 
-**ATTENZIONE:** In ogni gruppo, devi usare ciascuna delle 4 opzioni **una sola volta**. Non puoi assegnare la stessa valutazione a due frasi diverse nello stesso gruppo.
+**IMPORTANTE:** In ogni riga devi usare ogni opzione **una sola volta**.
 """)
 
 st.divider()
 
-# --- Form di Input ---
+# --- FORM DI INPUT ---
 user_scores = {}
 
 with st.form("kolb_form"):
@@ -169,47 +172,106 @@ with st.form("kolb_form"):
         cols = st.columns(4)
         row_numeric_values = []
         
-        # Creiamo 4 selectbox per la riga
         for col_idx, text in enumerate(row_data['items']):
             with cols[col_idx]:
                 st.info(text)
-                # Selectbox con le frasi
                 val_text = st.selectbox(
-                    f"Valutazione frase {col_idx+1} (Gruppo {row_data['id']})", 
+                    f"Valutazione frase {col_idx+1}", 
                     options=opzioni_lista, 
                     key=f"R{row_idx}_C{col_idx}",
-                    index=col_idx # Default scalato per suggerire l'unicità
+                    index=col_idx,
+                    label_visibility="collapsed" # Nasconde label per pulizia
                 )
-                # Convertiamo subito in numero per la validazione e il calcolo
                 val_num = mappa_punteggi[val_text]
                 row_numeric_values.append(val_num)
         
         # Validazione unicità
         if len(set(row_numeric_values)) != 4:
-            st.warning(f"⚠️ Attenzione nel Gruppo {row_data['id']}: hai usato la stessa valutazione più volte. Devi assegnare una valutazione diversa per ogni frase.")
+            st.warning(f"⚠️ Gruppo {row_data['id']}: hai usato la stessa valutazione più volte.")
             valid_form = False
         
         st.divider()
-        
-        # Salviamo i dati numerici
         user_scores[row_idx] = row_numeric_values
 
     submitted = st.form_submit_button("Calcola il mio Stile")
 
-# --- Logica di Calcolo e Risultati ---
+# --- CALCOLO E RISULTATI ---
 if submitted:
     if not valid_form:
-        st.error("Ci sono degli errori nella compilazione (valutazioni duplicate nei gruppi). Controlla le avvertenze gialle sopra e riprova.")
+        st.error("Per favore correggi gli errori evidenziati sopra (valutazioni duplicate).")
     else:
-        # --- Calcolo dei Punteggi ---
-        ec_indices = [1, 2, 3, 4, 6, 7]
-        score_ec = sum([user_scores[i][0] for i in ec_indices])
+        # Calcolo Punteggi
+        # Colonna 1 (EC): Righe 2,3,4,5,7,8 (indices: 1,2,3,4,6,7)
+        score_ec = sum([user_scores[i][0] for i in [1, 2, 3, 4, 6, 7]])
+        
+        # Colonna 2 (OR): Righe 1,3,6,7,8,9 (indices: 0,2,5,6,7,8)
+        score_or = sum([user_scores[i][1] for i in [0, 2, 5, 6, 7, 8]])
+        
+        # Colonna 3 (CA): Righe 2,3,4,5,8,9 (indices: 1,2,3,4,7,8)
+        score_ac = sum([user_scores[i][2] for i in [1, 2, 3, 4, 7, 8]])
+        
+        # Colonna 4 (SA): Righe 1,3,6,7,8,9 (indices: 0,2,5,6,7,8)
+        score_ae = sum([user_scores[i][3] for i in [0, 2, 5, 6, 7, 8]])
 
-        or_indices = [0, 2, 5, 6, 7, 8]
-        score_or = sum([user_scores[i][1] for i in or_indices])
+        # Determinazione Stile
+        dominant_style = ""
+        is_concrete = score_ec >= score_ac
+        is_active = score_ae >= score_or
+        
+        if is_concrete and is_active:
+            dominant_style = "Adattatore"
+        elif is_concrete and not is_active:
+            dominant_style = "Divergente"
+        elif not is_concrete and not is_active:
+            dominant_style = "Integratore"
+        elif not is_concrete and is_active:
+            dominant_style = "Convergente"
 
-        ac_indices = [1, 2, 3, 4, 7, 8]
-        score_ac = sum([user_scores[i][2] for i in ac_indices])
+        # --- VISUALIZZAZIONE ---
+        st.header("Il tuo Profilo")
+        col_res1, col_res2 = st.columns([1, 1])
+        
+        with col_res1:
+            # Grafico Radar
+            categories = ['Esperienza Concreta', 'Osservazione Riflessiva', 
+                          'Concettualizzazione Astratta', 'Sperimentazione Attiva']
+            values = [score_ec, score_or, score_ac, score_ae]
+            # Chiusura poligono
+            values += values[:1]
+            categories += categories[:1]
 
-        ae_indices = [0, 2, 5, 6, 7, 8]
-        score_ae = sum([user_scores[i][3] for i
+            fig = go.Figure()
+
+            fig.add_trace(go.Scatterpolar(
+                r=values,
+                theta=categories,
+                fill='toself',
+                name='Profilo',
+                line_color='blue', 
+                fillcolor='rgba(0, 0, 255, 0.2)'
+            ))
+
+            fig.update_layout(
+                polar=dict(
+                    radialaxis=dict(
+                        visible=True,
+                        showgrid=False,       # NO griglia interna
+                        showticklabels=False, # NO numeri asse
+                        range=[0, 24]
+                    ),
+                    angularaxis=dict(
+                        showline=True,
+                        linecolor='green',    # Cerchio esterno VERDE
+                        linewidth=4,          # Spessore marcato
+                        gridcolor='white'
+                    )
+                ),
+                showlegend=False,
+                margin=dict(l=40, r=40, t=40, b=40)
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+        with col_res2:
+            st.subheader(f"Risultato: {dominant_style}")
+            st.markdown(styles_description[dominant_style])
+            st.info(f"Punteggi: EC={score_ec}, OR={score_or}, CA={score_ac}, SA={score_ae}")
