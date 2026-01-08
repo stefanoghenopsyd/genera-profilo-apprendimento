@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.graph_objects as go
 
 # Configurazione della pagina
-st.set_page_config(page_title="Test Stile di Apprendimento (Kolb)", layout="wide")
+st.set_page_config(page_title="Test Stile di Apprendimento Personale", layout="wide")
 
 # --- CSS Personalizzato per nascondere elementi superflui e migliorare la grafica ---
 st.markdown("""
@@ -138,16 +138,16 @@ styles_description = {
 }
 
 # --- Header ---
-st.title("Autovalutazione Stile di Apprendimento (Modello di Kolb)")
+st.title("Autovalutazione Stile di Apprendimento")
 st.markdown("""
-Questo test ti aiuterà a definire la tua modalità di apprendimento. 
-Per ogni riga (gruppo di 4 affermazioni), assegna un punteggio da **1** a **4** in base a quanto l'affermazione ti descrive:
+Questo test ti aiuterà a definire la tua modalità di apprendimento. Il test si basa sul modello di Apprendimento Eseperienzale di David Kolb, è composto da 9 gruppi di 4 affermazioni descrittive di diverse modalità di apprendimento. Ti è chiesto di valutare quanto le senti in grado di descrivere come fai ad imparare.
+Per ogni riga (gruppo di 4 affermazioni), assegna un punteggio in base a quanto l'affermazione ti descrive:
 * **4** = "Sono proprio io!" (Massima corrispondenza)
 * **3** = "Qualche volta faccio così"
 * **2** = "Non faccio quasi mai così"
 * **1** = "Questo non sono io!" (Minima corrispondenza)
 
-**ATTENZIONE:** In ogni riga, devi usare i numeri 1, 2, 3 e 4 **una sola volta ciascuno**. Non puoi assegnare lo stesso voto a due frasi nella stessa riga.
+**ATTENZIONE:** In ogni riga, le diverse affermazioni non devono avere lo stesso peso **. Non puoi assegnare lo stesso voto a due frasi nella stessa riga.
 """)
 
 st.divider()
