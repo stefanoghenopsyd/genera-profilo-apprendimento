@@ -1,8 +1,24 @@
 import streamlit as st
 import plotly.graph_objects as go
+from PIL import Image
+
+# --- CONFIGURAZIONE COLORI BRAND ---
+# Se i colori non sono perfetti, modifica questi codici HEX
+BRAND_BLUE = "#1F3A52"        # Blu scuro del logo (Contorno Poligono)
+BRAND_BLUE_FILL = "rgba(31, 58, 82, 0.3)" # Blu del logo con trasparenza (Riempimento)
+BRAND_GREEN = "#758C75"       # Verde salvia del logo (Cerchio esterno)
 
 # --- CONFIGURAZIONE PAGINA ---
-st.set_page_config(page_title="Test Stile di Apprendimento", layout="wide")
+st.set_page_config(page_title="Test Stile di Apprendimento (Kolb)", layout="wide")
+
+# --- LOGO CENTRATO ---
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    # Assicurati che il file si trovi nella stessa cartella dello script
+    try:
+        st.image("GENERA Logo Colore.png", use_column_width=True)
+    except:
+        st.error("Errore: Immagine 'GENERA Logo Colore.jpg' non trovata. Inseriscila nella cartella.")
 
 # --- CSS PERSONALIZZATO ---
 st.markdown("""
@@ -24,10 +40,10 @@ st.markdown("""
 
 # --- MAPPATURA PUNTEGGI ---
 mappa_punteggi = {
-    "Questo sono proprio io!": 4,
+    "Sono proprio io!": 4,
     "Qualche volta faccio così": 3,
-    "Più raramente faccio così": 2,
-    "Questo non sono proprio io!": 1
+    "Non faccio quasi mai così": 2,
+    "Questo non sono io!": 1
 }
 opzioni_lista = list(mappa_punteggi.keys())
 
@@ -145,15 +161,15 @@ styles_description = {
 }
 
 # --- HEADER E INTRODUZIONE ---
-st.title("Autovalutazione Stile di Apprendimento")
+st.title("Autovalutazione Stile di Apprendimento (Modello di Kolb)")
 st.markdown("""
-Questo test ti aiuterà a definire la tua modalità di apprendimento. Si fonda sul modello dell'Apprendimento Esperienziale descritto da David Kolb e sul suo Learning Stress Inventory.
+Questo test ti aiuterà a definire la tua modalità di apprendimento. 
 Per ogni gruppo di 4 affermazioni, ordinale in base a quanto ti corrispondono:
 
-* **"Questo sono proprio io!"** (4 punti)
+* **"Sono proprio io!"** (4 punti)
 * **"Qualche volta faccio così"** (3 punti)
-* **"Più raramente faccio così"** (2 punti)
-* **"Questo non sono proprio io!"** (1 punto)
+* **"Non faccio quasi mai così"** (2 punti)
+* **"Questo non sono io!"** (1 punto)
 
 **IMPORTANTE:** In ogni riga devi usare ogni opzione **una sola volta**.
 """)
@@ -180,7 +196,7 @@ with st.form("kolb_form"):
                     options=opzioni_lista, 
                     key=f"R{row_idx}_C{col_idx}",
                     index=col_idx,
-                    label_visibility="collapsed" # Nasconde label per pulizia
+                    label_visibility="collapsed"
                 )
                 val_num = mappa_punteggi[val_text]
                 row_numeric_values.append(val_num)
@@ -201,16 +217,9 @@ if submitted:
         st.error("Per favore correggi gli errori evidenziati sopra (valutazioni duplicate).")
     else:
         # Calcolo Punteggi
-        # Colonna 1 (EC): Righe 2,3,4,5,7,8 (indices: 1,2,3,4,6,7)
         score_ec = sum([user_scores[i][0] for i in [1, 2, 3, 4, 6, 7]])
-        
-        # Colonna 2 (OR): Righe 1,3,6,7,8,9 (indices: 0,2,5,6,7,8)
         score_or = sum([user_scores[i][1] for i in [0, 2, 5, 6, 7, 8]])
-        
-        # Colonna 3 (CA): Righe 2,3,4,5,8,9 (indices: 1,2,3,4,7,8)
         score_ac = sum([user_scores[i][2] for i in [1, 2, 3, 4, 7, 8]])
-        
-        # Colonna 4 (SA): Righe 1,3,6,7,8,9 (indices: 0,2,5,6,7,8)
         score_ae = sum([user_scores[i][3] for i in [0, 2, 5, 6, 7, 8]])
 
         # Determinazione Stile
@@ -242,13 +251,14 @@ if submitted:
 
             fig = go.Figure()
 
+            # Traccia del Poligono (Blu Brand)
             fig.add_trace(go.Scatterpolar(
                 r=values,
                 theta=categories,
                 fill='toself',
                 name='Profilo',
-                line_color='blue', 
-                fillcolor='rgba(0, 0, 255, 0.2)'
+                line_color=BRAND_BLUE,          # Blu del Logo
+                fillcolor=BRAND_BLUE_FILL       # Blu trasparente
             ))
 
             fig.update_layout(
@@ -261,8 +271,8 @@ if submitted:
                     ),
                     angularaxis=dict(
                         showline=True,
-                        linecolor='green',    # Cerchio esterno VERDE
-                        linewidth=4,          # Spessore marcato
+                        linecolor=BRAND_GREEN,  # Cerchio esterno Verde Logo
+                        linewidth=5,            # Spessore marcato
                         gridcolor='white'
                     )
                 ),
